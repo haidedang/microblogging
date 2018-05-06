@@ -20,9 +20,16 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/',(req, res)=> { 
-    res.sendFile(path.join(__dirname + '/index.html')); 
+app.get('/login', (req, res) => { 
+    console.log("received");
+    res.send({ 
+        message: 'SUCCESS'
+    })
 })
+
+// app.get('/',(req, res)=> { 
+//     res.sendFile(path.join(__dirname + '/index.html')); 
+// })
 
 // Login Function 
 app.get('/login/:MetaAddress', metaAuth, (req, res) => {
@@ -32,6 +39,7 @@ app.get('/login/:MetaAddress', metaAuth, (req, res) => {
     }
   });
 
+// Meta Mask Authentication 
 app.get('/auth/:MetaMessage/:MetaSignature', metaAuth, (req,res)=> { 
     if(req.metaAuth && req.metaAuth.recovered){ 
         res.send(req.metaAuth.recovered); 
@@ -40,6 +48,6 @@ app.get('/auth/:MetaMessage/:MetaSignature', metaAuth, (req,res)=> {
     }
 })
 
-app.listen(3000, ()=>{
-    console.log("Listening on 3000"); 
+app.listen(8081, ()=>{
+    console.log("Listening on 8081"); 
 })
